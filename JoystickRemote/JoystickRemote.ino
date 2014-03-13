@@ -6,8 +6,14 @@
 int a, b, j;
 int ud, rl;
 int isUp, isRight;
+int throttle;
 
-#define pot A0
+#define throttlePot A0
+#define rightLeftAnalog A1
+#define upDownAnalog A2
+
+#define aButton 2
+#define bButton 3
 
 void setup(){
   Serial.begin(9600);
@@ -18,14 +24,17 @@ void setup(){
   Mirf.payload = 4;
   Mirf.config();
   
-  isRight = 1;
+  pinMode(aButton, INPUT);
+  pinMode(bButton, INPUT);
+  
+  /*isRight = 1;
   isUp = 1;
   j = 1;
   b = 1;
   a = 0;
   
   ud = 344;
-  rl = 800;
+  rl = 800;*/
   
   Serial.println("Listening..."); 
 }
@@ -38,7 +47,8 @@ void loop(){
   data[2] = byte2();
   data[3] = byte3();
   
-  ud = analogRead(A0);
+  setJoystickVal();
+  setButtons();
   
   if(!Mirf.isSending()){
     Mirf.setTADDR((byte *)"clie1");
@@ -55,6 +65,20 @@ void loop(){
   Serial.println();    
 }
 
+void setJoystickVal() {
+  throttle = analogRead(throttlePot);
+  ud = analogRead(upDownAnalog);
+  rl = analogRead(rightLeftAnalog);
+}
+
+void setButtons() {
+  a = !digitalRead(aButton);
+  b = !digitalRead(bButton);
+}
+
+/////////////////
+// PACKET DATA //
+/////////////////
 // BITS:
 // 128
 // 64
@@ -101,5 +125,6 @@ byte byte2() {
 }
 
 byte byte3() {
-  return 255;
+  byte x = map(throttle, 0, 1024, 0, 256);
+  return x;
 }
