@@ -1,7 +1,7 @@
-#include <SPI.h>
-#include <Mirf.h>
-#include <nRF24L01.h>
-#include <MirfHardwareSpiDriver.h>
+  #include <SPI.h>
+  #include <Mirf.h>
+  #include <nRF24L01.h>
+  #include <MirfHardwareSpiDriver.h>
 
 boolean a, b, j;
 boolean ud, rl;
