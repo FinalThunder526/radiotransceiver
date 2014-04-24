@@ -17,7 +17,7 @@ int JoystickLeftRight = 0;
 
 void setup(){
   Serial.begin(9600);
-  MaggieRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
+  BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
   radio.init(&ButtonAPressed, &ButtonBPressed, &ButtonJoyStickPressed, &RadioInContact,
              &throttle, &JoyStickForwardBack, &JoyStickLeftRight);
   

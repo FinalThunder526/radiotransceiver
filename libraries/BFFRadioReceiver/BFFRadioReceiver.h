@@ -8,18 +8,14 @@ class RadioReceiver
 public:
 	RadioReceiver(int newChannel);
 	void setup();
-	bool getA();
-	bool getB();
-	bool getJ();
-	int getUpDown();
-	int getRightLeft();
-	int getThrottle();
+	void init(boolean a, boolean b, boolean j, boolean contact, byte throttle, int fb, int rl);
 	bool update();
 
 private:
 	int _channel;
 	bool _a, _b, _j;
-	bool _ud, _rl;
+	byte _throttle;
+	bool _fb, _rl;
 	byte _data[4];
 };
 
