@@ -5,7 +5,7 @@
 #include <nRF24L01.h>
 #include <MirfHardwareSpiDriver.h>
 
-RadioReceiver :: RadioReceiver(int miso, int mosi, int sck, int ce, int csn)
+BFFRadioReceiver :: BFFRadioReceiver(int miso, int mosi, int sck, int ce, int csn)
 {
 	Mirf.spi = &MirfHardwareSpi;
   	Mirf.init();
@@ -16,7 +16,7 @@ RadioReceiver :: RadioReceiver(int miso, int mosi, int sck, int ce, int csn)
   	Mirf.config();
 }
 
-void RadioReceiver::init(boolean a, boolean b, boolean j, boolean contact, byte throttle, int fb, int rl)
+void BFFRadioReceiver::init(boolean* a, boolean* b, boolean* j, boolean* contact, byte* throttle, int* fb, int* rl)
 {
 	_a = a;
 	_b = b;
@@ -27,7 +27,7 @@ void RadioReceiver::init(boolean a, boolean b, boolean j, boolean contact, byte 
 	_rl = rl;
 }
 
-int RadioReceiver::update() //returns the delay I guess? shrug
+int BFFRadioReceiver::update() //returns the delay I guess? shrug
 {
 	unsigned long time = millis();
   	boolean timeout = false;
@@ -44,18 +44,18 @@ int RadioReceiver::update() //returns the delay I guess? shrug
   	}
   	if(!timeout) {
   		Mirf.getData(_data);
-		bool rlsign, udsign;
+		boolean rlsign, udsign;
 
 		rlsign = _data[0] / 16;
   		udsign = (_data[0] % 16) / 8;
-  		_j = (_data[0] % 8) / 4;
-  		_b = (_data[0] % 4) / 2;
-  		_a = (_data[0] % 2);
+  		*_j = (_data[0] % 8) / 4;
+  		*_b = (_data[0] % 4) / 2;
+  		*_a = (_data[0] % 2);
 
-		_fb = udsign * _data[1];
-		_rl = rlsign * _data[2];
-		_throttle = _data[3];
-		_contact = true;
+		*_fb = udsign * _data[1];
+		*_rl = rlsign * _data[2];
+		*_throttle = _data[3];
+		*_contact = true;
 	}
 
 	return millis() - time;

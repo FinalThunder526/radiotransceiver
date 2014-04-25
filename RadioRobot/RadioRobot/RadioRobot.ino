@@ -1,4 +1,8 @@
 #include <BFFRadioReceiver.h>
+#include <SPI.h>
+#include <Mirf.h>
+#include <nRF24L01.h>
+#include <MirfHardwareSpiDriver.h>
 
 boolean ButtonAPressed = false;
 boolean ButtonBPressed = false;
@@ -12,14 +16,16 @@ int JoystickLeftRight = 0;
 #define RadioMOSI 11
 #define RadioSCK 13
 
-#define Radio CE 8
-#define Radio CSN 7
+#define RadioCE 8
+#define RadioCSN 7
+
+BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
 
 void setup(){
   Serial.begin(9600);
   BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
-  radio.init(&ButtonAPressed, &ButtonBPressed, &ButtonJoyStickPressed, &RadioInContact,
-             &throttle, &JoyStickForwardBack, &JoyStickLeftRight);
+  radio.init(&ButtonAPressed, &ButtonBPressed, &ButtonJoystickPressed, &RadioInContact,
+             &Throttle, &JoystickForwardBack, &JoystickLeftRight);
   
   Serial.println("Beginning ... "); 
 }
@@ -43,4 +49,4 @@ void loop(){
   Serial.println();
   
   delay(400);
-}
+ }
