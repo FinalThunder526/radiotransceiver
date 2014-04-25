@@ -23,7 +23,6 @@ BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
 
 void setup(){
   Serial.begin(9600);
-  BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
   radio.init(&ButtonAPressed, &ButtonBPressed, &ButtonJoystickPressed, &RadioInContact,
              &Throttle, &JoystickForwardBack, &JoystickLeftRight);
   
@@ -31,7 +30,9 @@ void setup(){
 }
 
 void loop(){
-  radio.update();
+  int rad = radio.update();
+  
+  Serial.println(rad);
   
   Serial.print("A: ");
   Serial.print(ButtonAPressed);
@@ -46,7 +47,6 @@ void loop(){
   Serial.print(JoystickLeftRight);
   Serial.print(" Y: ");
   Serial.println(JoystickForwardBack);
-  Serial.println();
   
   delay(400);
  }
