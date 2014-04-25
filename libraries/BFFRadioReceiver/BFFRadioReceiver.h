@@ -6,17 +6,16 @@
 class RadioReceiver
 {
 public:
-	RadioReceiver(int newChannel);
-	void setup();
+	RadioReceiver(int miso, int mosi, int sck, int ce, int csn);
 	void init(boolean a, boolean b, boolean j, boolean contact, byte throttle, int fb, int rl);
-	bool update();
+	int update();
 
 private:
-	int _channel;
+	bool _contact;
 	bool _a, _b, _j;
 	byte _throttle;
-	bool _fb, _rl;
-	byte _data[4];
+	int _fb, _rl;
+	byte _data[Mirf.payload];
 };
 
 #endif

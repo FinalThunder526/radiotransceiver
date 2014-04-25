@@ -27,17 +27,10 @@ void RadioReceiver::init(boolean a, boolean b, boolean j, boolean contact, byte 
 	_rl = rl;
 }
 
-void RadioReceiver::setup()
-{
-
-}
-
 int RadioReceiver::update() //returns the delay I guess? shrug
 {
 	unsigned long time = millis();
   	boolean timeout = false;
-
-  	byte data[Mirf.payload];
   
   	Mirf.setTADDR((byte *)"serv1");
   
@@ -46,10 +39,24 @@ int RadioReceiver::update() //returns the delay I guess? shrug
   	while(!Mirf.dataReady()){
     		if ( ( millis() - time ) > 1000 ) {
       		timeout = true;
+		_contact = false;
     		}
   	}
-  	if(!timeout)
-  		Mirf.getData(data);
+  	if(!timeout) {
+  		Mirf.getData(_data);
+		bool rlsign, udsign;
+
+		rlsign = _data[0] / 16;
+  		udsign = (_data[0] % 16) / 8;
+  		_j = (_data[0] % 8) / 4;
+  		_b = (_data[0] % 4) / 2;
+  		_a = (_data[0] % 2);
+
+		_fb = udsign * _data[1];
+		_rl = rlsign * _data[2];
+		_throttle = _data[3];
+		_contact = true;
+	}
 
 	return millis() - time;
 
