@@ -8,12 +8,16 @@ int ud, rl;
 int isUp, isRight;
 int throttle;
 
-#define throttlePot A0
-#define rightLeftAnalog A1
-#define upDownAnalog A2
+#define throttlePot A4
+
+#define xAnalog A6
+#define yAnalog A7
 
 #define aButton 2
 #define bButton 3
+
+#define radioCEpin 8
+#define radioCSNpin 7
 
 void setup(){
   Serial.begin(9600);
@@ -24,17 +28,21 @@ void setup(){
   Mirf.payload = 4;
   Mirf.config();
   
+  // Sets the CSN and CE pins
+  Mirf.cePin = radioCEpin;
+  Mirf.csnPin = radioCSNpin;
+  
   pinMode(aButton, INPUT);
   pinMode(bButton, INPUT);
   
-  /*isRight = 1;
+  isRight = 1;
   isUp = 1;
   j = 1;
   b = 1;
   a = 0;
   
   ud = 344;
-  rl = 800;*/
+  rl = 800;
   
   Serial.println("Listening..."); 
 }
@@ -47,8 +55,15 @@ void loop(){
   data[2] = byte2();
   data[3] = byte3();
   
+  int x = analogRead(xAnalog);
+  
+  //Serial.print("1: ");
+  //Serial.print(x);
+  
+  
   setJoystickVal();
-  setButtons();
+  //setButtons();
+  setThrottleVal();
   
   if(!Mirf.isSending()){
     Mirf.setTADDR((byte *)"clie1");
@@ -66,9 +81,12 @@ void loop(){
 }
 
 void setJoystickVal() {
+  ud = analogRead(yAnalog);
+  rl = analogRead(xAnalog);
+}
+
+void setThrottleVal() {
   throttle = analogRead(throttlePot);
-  ud = analogRead(upDownAnalog);
-  rl = analogRead(rightLeftAnalog);
 }
 
 void setButtons() {
@@ -108,6 +126,7 @@ int getSign(int x) {
   return y;
 }
 
+// Up down
 byte byte1() {
   byte x = 0;
   int ud512 = map(ud, 0, 1024, -255, 256);
@@ -116,6 +135,7 @@ byte byte1() {
   return x;
 }
 
+// Right left
 byte byte2() { 
   byte x = 0;
   int rl512 = map(rl, 0, 1024, -255, 256);
@@ -124,6 +144,7 @@ byte byte2() {
   return x;
 }
 
+// Throttle
 byte byte3() {
   byte x = map(throttle, 0, 1024, 0, 256);
   return x;
