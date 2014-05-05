@@ -13,8 +13,8 @@ int throttle;
 #define xAnalog A6
 #define yAnalog A7
 
-#define aButton 2
-#define bButton 3
+#define aButton 16
+#define bButton 17
 
 #define radioCEpin 8
 #define radioCSNpin 7
@@ -55,14 +55,14 @@ void loop(){
   data[2] = byte2();
   data[3] = byte3();
   
-  int x = analogRead(xAnalog);
+  int x = digitalRead(bButton);
   
-  //Serial.print("1: ");
-  //Serial.print(x);
-  
+  Serial.print("1ol: ");
+  Serial.print(x);
+  Serial.print("    ");  
   
   setJoystickVal();
-  //setButtons();
+  setButtons();
   setThrottleVal();
   
   if(!Mirf.isSending()){
