@@ -19,10 +19,9 @@ int JoystickLeftRight = 0;
 #define RadioCE 8
 #define RadioCSN 7
 
-#define ServoPinA 4
-#define ServoPinB 5
-#define ServoPinC 3
-Servo ServoA, ServoB, ServoC; //throttle, joyX, joyY
+#define ServoPinL 9
+#define ServoPinR 10
+Servo servoL, servoR;
 
 BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
 
@@ -31,29 +30,15 @@ void setup(){
   radio.init(&ButtonAPressed, &ButtonBPressed, &ButtonJoystickPressed, &RadioInContact,
              &Throttle, &JoystickForwardBack, &JoystickLeftRight);
   
-  ServoA.attach(ServoPinA, 1000, 2000);
-  ServoB.attach(ServoPinB, 1000, 2000);
-  ServoB.attach(ServoPinC, 1000, 2000);
-  
-  pinMode(2, OUTPUT);
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(A5, OUTPUT);
+  servoL.attach(ServoPinL, 1000, 2000);
+  servoR.attach(ServoPinR, 1000, 2000);
   
   Serial.println("Beginning ... "); 
 }
 
 void loop(){
-  //int rad = radio.update();
-  
-  //Serial.println(rad);
-  
-  Serial.print("A: ");
-  Serial.print(ButtonAPressed);
-  Serial.print(" B: ");
-  Serial.print(ButtonBPressed);
-  Serial.print(" J: ");
-  Serial.println(ButtonJoystickPressed);
+  int rad = radio.update();
+  Serial.println(rad);
   
   Serial.print("Throttle: ");
   Serial.print(Throttle);
@@ -62,14 +47,8 @@ void loop(){
   Serial.print(" Y: ");
   Serial.println(JoystickForwardBack);
   
-  ServoA.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000));
-  ServoB.writeMicroseconds(map(JoystickLeftRight, -255, 255, 1000, 2000));
-  ServoC.writeMicroseconds(map(JoystickForwardBack, -255, 255, 1000, 2000));
-  
-  digitalWrite(2, RadioInContact); //red
-  digitalWrite(9, ButtonAPressed); //blue
-  digitalWrite(10, ButtonJoystickPressed); //green
-  digitalWrite(A5, ButtonBPressed); //yellow
+  servoL.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000));
+  servoR.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000));
   
   delay(200);
  }
