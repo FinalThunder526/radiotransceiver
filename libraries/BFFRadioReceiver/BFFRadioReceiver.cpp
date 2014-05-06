@@ -39,21 +39,29 @@ int BFFRadioReceiver::update() //returns the delay I guess? shrug
   	while(!Mirf.dataReady()){
     		if ( ( millis() - time ) > 1000 ) {
       		timeout = true;
-		_contact = false;
+			*_contact = false;
     		}
   	}
   	if(!timeout) {
   		Mirf.getData(_data);
 		boolean rlsign, udsign;
 
-		rlsign = _data[0] / 16;
+		rlsign = (_data[0] % 32) / 16;
   		udsign = (_data[0] % 16) / 8;
   		*_j = (_data[0] % 8) / 4;
   		*_b = (_data[0] % 4) / 2;
   		*_a = (_data[0] % 2);
+		
+		if(udsign)
+			*_fb = _data[1];
+		else
+			*_fb = -1 * _data[1];
+		
+		if(rlsign)
+			*_rl = _data[2];
+		else
+			*_rl = -1 * _data[2];
 
-		*_fb = udsign * _data[1];
-		*_rl = rlsign * _data[2];
 		*_throttle = _data[3];
 		*_contact = true;
 	}

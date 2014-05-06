@@ -33,7 +33,7 @@ void setup(){
   
   ServoA.attach(ServoPinA, 1000, 2000);
   ServoB.attach(ServoPinB, 1000, 2000);
-  ServoB.attach(ServoPinC, 1000, 2000);
+  ServoC.attach(ServoPinC, 1000, 2000);
   
   pinMode(2, OUTPUT);
   pinMode(9, OUTPUT);
@@ -44,9 +44,8 @@ void setup(){
 }
 
 void loop(){
-  //int rad = radio.update();
-  
-  //Serial.println(rad);
+  int rad = radio.update();
+  Serial.println(rad);
   
   Serial.print("A: ");
   Serial.print(ButtonAPressed);
@@ -71,5 +70,5 @@ void loop(){
   digitalWrite(10, ButtonJoystickPressed); //green
   digitalWrite(A5, ButtonBPressed); //yellow
   
-  delay(200);
+  //delay(200);
  }

@@ -47,8 +47,10 @@ void loop(){
   Serial.print(" Y: ");
   Serial.println(JoystickForwardBack);
   
-  servoL.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000));
-  servoR.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000));
+  double steering = JoystickLeftRight / 255; //value from negative 1 to 1
+  
+  servoL.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000) * (1 - Math.abs(steering)) * steering);
+  servoR.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000) * (1 - Math.abs(steering)) * steering);
   
   delay(200);
  }
