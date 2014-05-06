@@ -55,12 +55,6 @@ void loop(){
   data[2] = byte2();
   data[3] = byte3();
   
-  int x = digitalRead(bButton);
-  
-  Serial.print("1ol: ");
-  Serial.print(x);
-  Serial.print("    ");  
-  
   setJoystickVal();
   setButtons();
   setThrottleVal();
