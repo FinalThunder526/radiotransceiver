@@ -10,8 +10,8 @@ boolean ButtonBPressed = false;
 boolean ButtonJoystickPressed = false;
 boolean RadioInContact = false;
 byte Throttle = 127;
-int JoystickForwardBack = 0;
-int JoystickLeftRight = 0;
+int JoystickY = 0;
+int JoystickX = 0;
 
 #define RadioMISO 12
 #define RadioMOSI 11
@@ -28,7 +28,7 @@ BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
 void setup(){
   Serial.begin(9600);
   radio.init(&ButtonAPressed, &ButtonBPressed, &ButtonJoystickPressed, &RadioInContact,
-             &Throttle, &JoystickForwardBack, &JoystickLeftRight);
+             &Throttle, &JoystickY, &JoystickX);
   
   servoL.attach(ServoPinL, 1000, 2000);
   servoR.attach(ServoPinR, 1000, 2000);
@@ -43,19 +43,19 @@ void loop(){
   Serial.print(" || Throttle: ");
   Serial.print(Throttle);
   Serial.print(" X: ");
-  Serial.print(JoystickLeftRight);
+  Serial.print(JoystickX);
   Serial.print(" Y: ");
-  Serial.println(JoystickForwardBack); */
+  Serial.println(JoystickY); */
   
   int modL = 1;
   int modR = 1;
-  if(JoystickLeftRight > 50)
+  if(JoystickX > 50)
     modR = -1;
-  if(JoystickLeftRight < -50)
+  if(JoystickX < -50)
     modL = -1;
   
-  int valL = map(JoystickForwardBack, -255, 255, 1000, 2000) * modL;
-  int valR = map(JoystickForwardBack, -255, 255, 1000, 2000) * modR;
+  int valL = map(JoystickY, -255, 255, 1000, 2000) * modL;
+  int valR = map(JoystickY, -255, 255, 1000, 2000) * modR;
   
   servoL.writeMicroseconds(valL);
   servoR.writeMicroseconds(valR);
