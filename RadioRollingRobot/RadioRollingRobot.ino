@@ -54,11 +54,11 @@ void loop(){
   if(JoystickX < -50)
     modL = -1;
   
-  int valL = map(JoystickY, -255, 255, 1000, 2000) * modL;
-  int valR = map(JoystickY, -255, 255, 1000, 2000) * modR;
+  int valL = map(JoystickY, -255, 255, -500, 500) * modL;
+  int valR = map(JoystickY, -255, 255, -500, 500) * modR;
   
-  servoL.writeMicroseconds(valL);
-  servoR.writeMicroseconds(valR);
+  servoL.writeMicroseconds(valL + 1500);
+  servoR.writeMicroseconds(valR + 1500);
   
   Serial.print("L: ");
   Serial.print(valL);
