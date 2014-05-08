@@ -38,19 +38,32 @@ void setup(){
 
 void loop(){
   int rad = radio.update();
-  Serial.println(rad);
+  /*Serial.print(rad);
   
-  Serial.print("Throttle: ");
+  Serial.print(" || Throttle: ");
   Serial.print(Throttle);
   Serial.print(" X: ");
   Serial.print(JoystickLeftRight);
   Serial.print(" Y: ");
-  Serial.println(JoystickForwardBack);
+  Serial.println(JoystickForwardBack); */
   
-  double steering = JoystickLeftRight / 255; //value from negative 1 to 1
+  int modL = 1;
+  int modR = 1;
+  if(JoystickLeftRight > 50)
+    modR = -1;
+  if(JoystickLeftRight < -50)
+    modL = -1;
   
-  servoL.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000) * (1 - Math.abs(steering)) * steering);
-  servoR.writeMicroseconds(map(Throttle, 0, 255, 1000, 2000) * (1 - Math.abs(steering)) * steering);
+  int valL = map(JoystickForwardBack, -255, 255, 1000, 2000) * modL;
+  int valR = map(JoystickForwardBack, -255, 255, 1000, 2000) * modR;
   
-  delay(200);
+  servoL.writeMicroseconds(valL);
+  servoR.writeMicroseconds(valR);
+  
+  Serial.print("L: ");
+  Serial.print(valL);
+  Serial.print(" | R: ");
+  Serial.println(valR);
+  
+  //delay(200);
  }
