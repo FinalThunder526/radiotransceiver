@@ -47,46 +47,15 @@ void loop(){
   Serial.print(" Y: ");
   Serial.println(JoystickY); */
   
-  /*int modL = 1;
-  int modR = 1;
-  if(JoystickX > 50)
-    modR = -1;
-  if(JoystickX < -50)
-    modL = -1;
-    
-  Serial.print("modL: ");
-  Serial.print(modL);
-  Serial.print("modR: ");
-  Serial.println(modR);
-  
-  int valL = map(JoystickY, -255, 255, -500, 500) * modL;
-  int valR = map(JoystickY, -255, 255, -500, 500) * modR;*/
-  
   // R IS REVERSED.
-  
-int valL = 0, valR = 0;
-		double k = 2.773;
-
-		valL = (int) ((k / sqrt(2)) * (JoystickX + JoystickY));
-		valR = (int) ((k / sqrt(2)) * (JoystickX - JoystickY));
+  int valL = 0, valR = 0;
+  double k = 2.773;
+  valL = (int) ((k / sqrt(2)) * (JoystickX + JoystickY));
+  valR = (int) ((k / sqrt(2)) * (JoystickX - JoystickY));
+  		
+  if(valL > 500) valL = 500;
+  if(valR > 500) valR = 500;
 		
-		if(valL > 500) valL = 500;
-		if(valR > 500) valR = 500;
-		
-  /*
-  if(JoystickY > 50)
-    valL = valR = 500;
-  if(JoystickY < -50)
-    valL = valR = -500;
-  if(JoystickX > 50) {
-    valL = 500;
-    valR = -500;
-  }
-  if(JoystickX < -50) {
-    valL = -500;
-    valR = 500;
-  }*/
-    
   servoL.writeMicroseconds(valL + 1500);
   servoR.writeMicroseconds(valR + 1500);
   
