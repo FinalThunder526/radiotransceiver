@@ -48,9 +48,9 @@ void loop(){
   Serial.println(JoystickY); */
   
   int modL = 1;
-  int modR = 1;
+  int modR = -1;
   if(JoystickX > 50)
-    modR = -1;
+    modR = 1;
   if(JoystickX < -50)
     modL = -1;
   
@@ -60,10 +60,10 @@ void loop(){
   servoL.writeMicroseconds(valL + 1500);
   servoR.writeMicroseconds(valR + 1500);
   
-  Serial.print("L: ");
+  /*Serial.print("L: ");
   Serial.print(valL);
   Serial.print(" | R: ");
-  Serial.println(valR);
+  Serial.println(valR);*/
   
   //delay(200);
  }
