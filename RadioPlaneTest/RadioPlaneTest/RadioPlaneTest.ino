@@ -23,6 +23,9 @@ int JoystickX = 0;
 #define ServoPinR 10
 Servo servoL, servoR;
 
+#define MotorPin 5
+Servo motor;
+
 BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
 
 void setup(){
@@ -33,19 +36,32 @@ void setup(){
   servoL.attach(ServoPinL, 1000, 2000);
   servoR.attach(ServoPinR, 1000, 2000);
   
+  motor.attach(MotorPin);
+  
+  motor.write(0);
+  delay(1500);
+  
   Serial.println("Beginning ... "); 
 }
 
 void loop(){
   int rad = radio.update();
   
+  Serial.println(rad);
+  //Serial.println();
+  
   servoL.writeMicroseconds(map(JoystickX, -255, 255, 1000, 2000));
   servoR.writeMicroseconds(map(JoystickY, -255, 255, 1000, 2000));
+  
+  motor.write(map(Throttle, 0, 255, 0, 180));
   
   Serial.print("X: ");
   Serial.print(JoystickX);
   Serial.print(" Y: ");
-  Serial.println(JoystickY);
+  Serial.print(JoystickY);
+  Serial.print(" Mot: ");
+  Serial.println(Throttle);
+  
   
   //delay(200);
  }
