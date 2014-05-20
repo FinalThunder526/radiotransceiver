@@ -13,8 +13,10 @@ int throttle;
 #define xAnalog A6
 #define yAnalog A7
 
+#define jButton 15
 #define aButton 16
 #define bButton 17
+
 
 #define radioCEpin 8
 #define radioCSNpin 7
@@ -55,6 +57,14 @@ void loop(){
   data[2] = byte2();
   data[3] = byte3();
   
+  Serial.print("j");
+  Serial.print(j);
+  Serial.print(" a");
+  Serial.print(a);
+  Serial.print(" b");
+  Serial.print(b);
+  Serial.print(". ");
+  
   setJoystickVal();
   setButtons();
   setThrottleVal();
@@ -86,6 +96,7 @@ void setThrottleVal() {
 void setButtons() {
   a = !digitalRead(aButton);
   b = !digitalRead(bButton);
+  j = !digitalRead(jButton);
 }
 
 /////////////////

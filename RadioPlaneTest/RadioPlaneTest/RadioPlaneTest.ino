@@ -50,8 +50,14 @@ void loop(){
   Serial.println(rad);
   //Serial.println();
   
-  servoL.writeMicroseconds(map(JoystickX, -255, 255, 1000, 2000));
-  servoR.writeMicroseconds(map(JoystickY, -255, 255, 1000, 2000));
+  int valL = 0, valR = 0;
+  double k = 2.773;
+  
+  valL = (int) ((k / sqrt(2)) * (JoystickX + JoystickY));
+  valR = (int) ((k / sqrt(2)) * (JoystickX - JoystickY));
+  
+  servoL.writeMicroseconds(1500 + valL);
+  servoR.writeMicroseconds(1500 + valR);
   
   motor.write(map(Throttle, 0, 255, 0, 180));
   
