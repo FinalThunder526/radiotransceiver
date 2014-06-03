@@ -17,7 +17,7 @@ int throttle;
 #define aButton 16
 #define bButton 17
 
-
+// Changeable
 #define radioCEpin 8
 #define radioCSNpin 7
 
