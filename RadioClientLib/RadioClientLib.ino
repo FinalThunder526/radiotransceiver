@@ -16,8 +16,9 @@ int JoystickLeftRight = 0;
 #define RadioMOSI 11
 #define RadioSCK 13
 
-#define RadioCE 8
-#define RadioCSN 7
+//CE is 8 normally but it's 7 on the receiver board for whatever reason
+#define RadioCE 7
+#define RadioCSN 8
 
 BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN);
 
@@ -32,16 +33,17 @@ void setup(){
 void loop(){
   int rad = radio.update();
   
-  Serial.println(rad);
+  //Serial.println(rad);
+  Serial.print(RadioInContact);
   
-  Serial.print("A: ");
+  Serial.print(" | A: ");
   Serial.print(ButtonAPressed);
   Serial.print(" B: ");
   Serial.print(ButtonBPressed);
   Serial.print(" J: ");
-  Serial.println(ButtonJoystickPressed);
+  Serial.print(ButtonJoystickPressed);
   
-  Serial.print("Throttle: ");
+  Serial.print(" | Throttle: ");
   Serial.print(Throttle);
   Serial.print(" X: ");
   Serial.print(JoystickLeftRight);
