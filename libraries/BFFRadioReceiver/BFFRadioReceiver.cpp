@@ -11,6 +11,9 @@ BFFRadioReceiver :: BFFRadioReceiver(int miso, int mosi, int sck, int ce, int cs
   	Mirf.init();
   
   	Mirf.setRADDR((byte *)"clie1");
+
+	Mirf.cePin = ce;
+	Mirf.csnPin = csn;
   
   	Mirf.payload = 4;
   	Mirf.config();
@@ -40,6 +43,7 @@ int BFFRadioReceiver::update() //returns the delay I guess? shrug
     		if ( ( millis() - time ) > 1000 ) {
       		timeout = true;
 			*_contact = false;
+			break;
     		}
   	}
   	if(!timeout) {
