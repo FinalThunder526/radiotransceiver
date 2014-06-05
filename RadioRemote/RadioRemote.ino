@@ -17,15 +17,9 @@ int throttle;
 #define aButton 16
 #define bButton 17
 
-<<<<<<< HEAD
-// Changeable
-#define radioCEpin 8
-#define radioCSNpin 7
-=======
 //CEpin is usually 8 but on the receiver board it's 7 for whatever reason
 #define radioCEpin 7
 #define radioCSNpin 8
->>>>>>> 9cb41adfcca94616915ebd3839f43a380d102a44
 
 void setup(){
   Serial.begin(9600);
