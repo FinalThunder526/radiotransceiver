@@ -1,7 +1,13 @@
-  #include <SPI.h>
-  #include <Mirf.h>
-  #include <nRF24L01.h>
-  #include <MirfHardwareSpiDriver.h>
+/*
+RadioClient.ino
+Margaret Robinson, Sarang Joshi
+23 Apr 2014
+*/
+
+#include <SPI.h>
+#include <Mirf.h>
+#include <nRF24L01.h>
+#include <MirfHardwareSpiDriver.h>
 
 boolean a, b, j;
 boolean ud, rl;
