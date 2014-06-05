@@ -1,3 +1,9 @@
+/*
+RadioPlaneTest.ino
+Margaret Robinson, Sarang Joshi
+19 May 2014
+*/
+
 #include <BFFRadioReceiver.h>
 #include <SPI.h>
 #include <Mirf.h>
