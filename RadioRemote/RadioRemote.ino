@@ -1,3 +1,9 @@
+/*
+RadioRemote.ino
+Margaret Robinson, Sarang Joshi
+29 Apr 2014
+*/
+
 #include <SPI.h>
 #include <Mirf.h>
 #include <nRF24L01.h>
@@ -113,13 +119,13 @@ void setButtons() {
 // 1      A
 
 byte byte0() {
-  byte x = 0;
+  byte y = 0;
   
-  x += a*1 + b*2 + j*4;
-  x += isUp * 8;
-  x += isRight * 16;
+  y += a*1 + b*2 + j*4;
+  y += isUp * 8;
+  y += isRight * 16;
   
-  return x;
+  return y;
 }
 
 int getSign(int x) {
