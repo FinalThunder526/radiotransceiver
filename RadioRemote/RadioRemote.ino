@@ -4,7 +4,7 @@
 #include <MirfHardwareSpiDriver.h>
 
 int a, b, j;
-int ud, rl;
+int y, x;
 int isUp, isRight;
 int throttle;
 
@@ -43,8 +43,8 @@ void setup(){
   b = 1;
   a = 0;
   
-  ud = 344;
-  rl = 800;
+  y = 344;
+  x = 800;
   
   Serial.println("Listening..."); 
 }
@@ -85,8 +85,8 @@ void loop(){
 }
 
 void setJoystickVal() {
-  ud = analogRead(yAnalog);
-  rl = analogRead(xAnalog);
+  y = analogRead(yAnalog);
+  x = analogRead(xAnalog);
 }
 
 void setThrottleVal() {
@@ -134,18 +134,18 @@ int getSign(int x) {
 // Up down
 byte byte1() {
   byte x = 0;
-  int ud512 = map(ud, 0, 1024, -255, 256);
-  isUp = getSign(ud512);
-  x = abs(ud512);
+  int y512 = map(y, 0, 1024, -255, 256);
+  isUp = getSign(y512);
+  x = abs(y512);
   return x;
 }
 
 // Right left
 byte byte2() { 
   byte x = 0;
-  int rl512 = map(rl, 0, 1024, -255, 256);
-  isRight = getSign(rl512);
-  x = abs(rl512);
+  int x512 = map(x, 0, 1024, -255, 256);
+  isRight = getSign(x512);
+  x = abs(x512);
   return x;
 }
 
