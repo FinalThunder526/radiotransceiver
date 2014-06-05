@@ -1,3 +1,9 @@
+/*
+RadioClientLib.ino
+Sarang Joshi, Margaret Robinson
+9 May 2014
+*/
+
 #include <BFFRadioReceiver.h>
 #include <SPI.h>
 #include <Mirf.h>
