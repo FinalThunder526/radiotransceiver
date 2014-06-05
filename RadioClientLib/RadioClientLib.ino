@@ -1,6 +1,6 @@
 /*
 RadioClientLib.ino
-Sarang Joshi, Margaret Robinson
+Margaret Robinson, Sarang Joshi
 9 May 2014
 */
 
