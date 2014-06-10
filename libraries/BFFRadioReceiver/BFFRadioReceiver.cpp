@@ -5,12 +5,12 @@
 #include <nRF24L01.h>
 #include <MirfHardwareSpiDriver.h>
 
-BFFRadioReceiver :: BFFRadioReceiver(int miso, int mosi, int sck, int ce, int csn)
+BFFRadioReceiver :: BFFRadioReceiver(int miso, int mosi, int sck, int ce, int csn, char * raddr)
 {
 	Mirf.spi = &MirfHardwareSpi;
   	Mirf.init();
   
-  	Mirf.setRADDR((byte *)"clie1");
+  	Mirf.setRADDR((byte *)raddr);
 
 	Mirf.cePin = ce;
 	Mirf.csnPin = csn;

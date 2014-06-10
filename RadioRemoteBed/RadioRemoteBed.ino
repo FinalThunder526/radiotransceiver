@@ -8,6 +8,8 @@ int yVal, xVal;
 int isUp, isRight;
 int throttle;
 
+char * taddr = "switches";
+
 #define throttlePot A4
 #define xAnalog A6
 #define yAnalog A7
@@ -62,7 +64,7 @@ void loop(){
   setThrottleVal();
   
   if(!Mirf.isSending()){
-    Mirf.setTADDR((byte *)"clie1");
+    Mirf.setTADDR((byte *)taddr);
     
     Mirf.send(data);
     

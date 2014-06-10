@@ -11,13 +11,18 @@ Margaret Robinson, Sarang Joshi
 
 boolean a, b, j;
 boolean ud, rl;
+char * raddr = "clie1";
 
 void setup(){
   Serial.begin(9600);
   Mirf.spi = &MirfHardwareSpi;
   Mirf.init();
   
-  Mirf.setRADDR((byte *)"clie1");
+  Mirf.setRADDR((byte *)raddr);
+  
+  // PCB's, CE is 7, CSN is 8
+  Mirf.cePin = 7;
+  Mirf.csnPin = 8;
   
   Mirf.payload = 4;
   Mirf.config();

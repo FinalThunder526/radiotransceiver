@@ -10,7 +10,7 @@
 class BFFRadioReceiver
 {
 public:
-	BFFRadioReceiver(int miso, int mosi, int sck, int ce, int csn);
+	BFFRadioReceiver(int miso, int mosi, int sck, int ce, int csn, char* addr);
 	void init(boolean* a, boolean* b, boolean* j, boolean* contact, byte* throttle, int* fb, int* rl);
 	int update();
 
