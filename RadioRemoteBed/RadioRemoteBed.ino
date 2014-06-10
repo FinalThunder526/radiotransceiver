@@ -8,9 +8,9 @@ int yVal, xVal;
 int isUp, isRight;
 int throttle;
 
-#define yAnalog A5
+#define throttlePot A4
 #define xAnalog A6
-#define throttlePot A7
+#define yAnalog A7
 
 // Equivalent to Analog pins
 #define jButton 15
