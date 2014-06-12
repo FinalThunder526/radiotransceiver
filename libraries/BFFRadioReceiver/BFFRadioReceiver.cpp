@@ -5,7 +5,7 @@
 #include <nRF24L01.h>
 #include <MirfHardwareSpiDriver.h>
 
-BFFRadioReceiver :: BFFRadioReceiver(int miso, int mosi, int sck, int ce, int csn, char * raddr)
+BFFRadioReceiver :: BFFRadioReceiver(int ce, int csn, int* payload, char * raddr)
 {
 	Mirf.spi = &MirfHardwareSpi;
   	Mirf.init();
@@ -15,19 +15,21 @@ BFFRadioReceiver :: BFFRadioReceiver(int miso, int mosi, int sck, int ce, int cs
 	Mirf.cePin = ce;
 	Mirf.csnPin = csn;
   
-  	Mirf.payload = 4;
+  	Mirf.payload = payload;
+	_payload = payload;
+
   	Mirf.config();
 }
 
-void BFFRadioReceiver::init(boolean* a, boolean* b, boolean* j, boolean* contact, byte* throttle, int* fb, int* rl)
+void BFFRadioReceiver::init(boolean* a, boolean* b, boolean* j, boolean* contact, byte* throttle, int* y, int* x)
 {
 	_a = a;
 	_b = b;
 	_j = j;
 	_contact = contact;
 	_throttle = throttle;
-	_fb = fb;
-	_rl = rl;
+	_y = y;
+	_x = x;
 }
 
 int BFFRadioReceiver::update() //returns the delay I guess? shrug

@@ -10,28 +10,24 @@ Margaret Robinson, Sarang Joshi
 #include <nRF24L01.h>
 #include <MirfHardwareSpiDriver.h>
 
-boolean ButtonAPressed = false;
-boolean ButtonBPressed = false;
-boolean ButtonJoystickPressed = false;
-boolean RadioInContact = false;
-byte Throttle = 127;
-int JoystickForwardBack = 0;
-int JoystickLeftRight = 0;
-
-#define RadioMISO 12
-#define RadioMOSI 11
-#define RadioSCK 13
+boolean a = false;
+boolean b = false;
+boolean j = false;
+boolean inContact = false;
+byte throttle = 127;
+int joystickY = 0;
+int joystickX = 0;
 
 //CE is 8 normally but it's 7 on the receiver board for whatever reason
 #define RadioCE 7
 #define RadioCSN 8
 
-BFFRadioReceiver radio(RadioMISO, RadioMOSI, RadioSCK, RadioCE, RadioCSN, "switches");
+BFFRadioReceiver radio(RadioCE, RadioCSN, "switches");
 
 void setup(){
   Serial.begin(9600);
-  radio.init(&ButtonAPressed, &ButtonBPressed, &ButtonJoystickPressed, &RadioInContact,
-             &Throttle, &JoystickForwardBack, &JoystickLeftRight);
+  radio.init(&a, &b, &j, &inContact,
+             &throttle, &joystickX, &joystickY);
   
   Serial.println("Beginning ... "); 
 }
@@ -39,22 +35,8 @@ void setup(){
 void loop(){
   int rad = radio.update();
   
-  //Serial.println(rad);
-  Serial.print(RadioInContact);
-  
-  Serial.print(" | A: ");
-  Serial.print(ButtonAPressed);
-  Serial.print(" B: ");
-  Serial.print(ButtonBPressed);
-  Serial.print(" J: ");
-  Serial.print(ButtonJoystickPressed);
-  
-  Serial.print(" | Throttle: ");
-  Serial.print(Throttle);
-  Serial.print(" X: ");
-  Serial.print(JoystickLeftRight);
-  Serial.print(" Y: ");
-  Serial.println(JoystickForwardBack);
+  String printed = radio.print();
+  Serial.print(printed);
   
   delay(400);
  }
